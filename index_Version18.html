@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Smart Image Compressor and Converter – Fast Online Free Tool</title>
+  <meta name="description" content="Compress and convert images instantly! Smart Image Compressor and Converter supports JPEG, PNG, WebP, AVIF, HEIC, HEIF, BMP. 100% free, secure & privacy-friendly. No upload required.">
+  <meta name="keywords" content="image compressor, image converter, free online image tool, compress images, convert images, JPEG compressor, PNG compressor, WebP converter, AVIF converter, HEIC converter, resize images, privacy image tool, fast image compression, online image optimizer, Smart Image Compressor, image reduce size, photo compress, bulk image compressor">
+  <meta name="author" content="Smart Image Compressor | skycommunics@gmail.com">
+  <meta name="contact" content="skycommunics@gmail.com">
+  <link rel="canonical" href="https://simple-img-compressor.vercel.app/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://simple-img-compressor.vercel.app/">
+  <meta property="og:title" content="Smart Image Compressor and Converter – Fast Online Free Tool">
+  <meta property="og:description" content="Compress and convert images (JPEG, PNG, WebP, AVIF, HEIC, HEIF, BMP) online for free – no uploads needed. Super fast, privacy-first, and easy to use!">
+  <meta property="og:image" content="https://simple-img-compressor.vercel.app/og-image.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:url" content="https://simple-img-compressor.vercel.app/">
+  <meta name="twitter:title" content="Smart Image Compressor and Converter – Fast Online Free Tool">
+  <meta name="twitter:description" content="Compress and convert images (JPEG, PNG, WebP, AVIF, HEIC, HEIF, BMP) online for free – no uploads needed. Super fast, privacy-first, and easy to use!">
+  <meta name="twitter:image" content="https://simple-img-compressor.vercel.app/og-image.jpg">
+  <link rel="icon" href="https://simple-img-compressor.vercel.app/favicon.ico" type="image/x-icon">
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/heic2any@0.0.4/dist/heic2any.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0; padding: 0;
+      font-family: 'Inter', Arial, sans-serif;
+      background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+      color: #222;
+    }
+    body {
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+    header {
+      background: linear-gradient(90deg, #004400 0%, #0e4f1f 100%);
+      color: #fff;
+      padding: 1.1em 0 1em;
+      text-align: center;
+      border-bottom: 2px solid #2196f3;
+      box-shadow: 0 2px 12px rgba(33,150,243,0.09);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 72px;
+      position: relative;
+    }
+    .main-title {
+      font-size: 2.1em;
+      font-weight: 900;
+      letter-spacing: .02em;
+      color: #fff;
+      text-shadow: 0 3px 16px #084b22, 0 1px 0 #fff5;
+      margin: 0;
+      padding: 0.18em 0;
+      font-family: 'Inter', Arial, sans-serif;
+      transition: font-size 0.2s;
+      line-height: 1.1;
+    }
+    @media (max-width: 600px) {
+      .main-title { font-size: 1.06em; }
+      header { min-height: 46px; padding: 0.5em 0 0.35em; }
+    }
+    main {
+      max-width: 980px;
+      margin: 2em auto;
+      background: #fff;
+      padding: 2em 2em 1em;
+      border-radius: 16px;
+      box-shadow: 0 4px 32px rgba(33,150,243,0.07);
+      box-sizing: border-box;
+    }
+    .upload-zone {
+      border: 2px dashed #90caf9;
+      border-radius: 10px;
+      background: #e3f2fd !important;
+      padding: 2em 1em;
+      text-align: center;
+      color: #1976d2;
+      font-size: 1.15em;
+      margin-bottom: 1.5em;
+      cursor: pointer;
+      transition: background 0.2s;
+      box-shadow: none;
+    }
+    .upload-zone.dragover {background: #bbdefb;border-color: #2196f3;color: #0d47a1;}
+    .upload-btn-group {
+      margin-top: 1em;
+      display: flex;
+      gap: 1em;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .upload-btn {padding: .65em 1.4em;background: linear-gradient(90deg, #2196f3 60%, #21cbf3);color: #fff; border: none; border-radius: 6px;font-weight: 700; font-size: 1em;cursor: pointer; transition: background .18s;}
+    .supported-types {color: #1565c0;font-size: .98em;margin-top: 10px;background: #e8eaf6;border-radius: 5px;display: inline-block;padding: 4px 14px;font-weight: 500;}
+    .preview-row {
+      display: flex;
+      gap: 2em;
+      align-items: flex-start;
+      margin-bottom: 1em;
+      justify-content: center;
+    }
+    .card {background: #f7fbff;border-radius: 10px;box-shadow: 0 2px 12px rgba(33,150,243,0.04);padding: 1.3em 1em .7em 1em;min-width: 240px;max-width:340px;text-align: center;flex: 1;position: relative;}
+    .preview-img {
+      width: 100%;
+      max-width: 300px;
+      max-height: 200px;
+      border-radius: 8px;
+      margin-bottom: .4em;
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(33,150,243,0.09);
+      background: repeating-linear-gradient(135deg,#e3f2fd 0px, #e3f2fd 20px,#f8bbd0 20px, #f8bbd0 40px);
+      outline: 2px solid #90caf9;
+      outline-offset: 2px;
+      transition: box-shadow .2s, outline-color .2s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      object-fit: contain;
+      background-color: #fff;
+    }
+    .preview-img:hover { box-shadow: 0 8px 32px #42a5f5aa; outline-color: #1976d2;}
+    .zoom-modal {display: none; position: fixed; z-index: 99;left: 0; top: 0; width: 100vw; height: 100vh;background: rgba(33,150,243,0.15);align-items: center; justify-content: center;}
+    .zoom-modal img {max-width: 90vw; max-height: 90vh; border-radius: 12px;box-shadow: 0 4px 40px #2196f3bb;background: #fff;}
+    .info-row {font-size: 1em;color: #2e7d32;margin-bottom: .7em;line-height: 1.4;}
+    label { display: block; margin:1em 0 .5em;}
+    input[type="range"] { width: 100%; margin-bottom: .2em;}
+    .range-row { display: flex; align-items: center; gap: 1em;}
+    .range-row span {font-size: .97em;font-weight: 500;color: #1976d2;background: #e3f2fd;border-radius: 4px;padding: 2px 8px;margin-left: 7px;}
+    .resize-unit-group {display: flex;gap: .8em;margin-bottom: .7em;align-items: center;font-size: .99em;}
+    .resize-unit-label {color: #1976d2;font-weight: 600;margin-right: 8px;}
+    .aspect-lock-row { display: flex; align-items: center; gap: 0.8em; margin-bottom: 0.5em; font-size: .99em;}
+    .aspect-lock-label { color: #1976d2; font-weight: 600; }
+    .aspect-lock-checkbox { width: 1.15em; height: 1.15em; }
+    .error-msg { color: #cb2431; font-size: 1em; margin-top: .6em;}
+    .success-msg { color: #388e3c; font-size: 1em; margin-top: .6em;}
+    .btn {padding: .6em 1.5em;background: linear-gradient(90deg, #2196f3 60%, #21cbf3);color: #fff; border: none; border-radius: 6px;font-weight: 700; font-size: 1em;cursor: pointer; transition: background .18s;}
+    .btn:disabled { background: #aec4e6; cursor: not-allowed;}
+    .reset-btn {padding: .4em 1.1em;background: #bbb;color: #fff;border: none;border-radius: 4px;font-size: .97em;font-weight: 600;margin-left: 16px;cursor: pointer;transition: background .13s;}
+    .reset-btn:hover { background: #757575;}
+    .footer {
+      text-align: center;
+      color: #999;
+      font-size: .98em;
+      margin: 2.5em 0 0.3em;
+      letter-spacing: .02em;
+      position: relative;
+    }
+    .footer .about-btn-footer {
+      display: inline-block;
+      margin-left: 16px;
+      margin-right: 16px;
+      background: #e3f2fd;
+      color: #185a9d;
+      border: none;
+      border-radius: 16px;
+      font-size: .98em;
+      font-weight: 600;
+      padding: .32em 1.2em;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #185a9d15;
+      transition: background .2s, color .2s;
+      line-height: 1;
+      height: 2.1em;
+      vertical-align: middle;
+    }
+    .footer .about-btn-footer:hover,
+    .footer .about-btn-footer:active,
+    .footer .about-btn-footer:focus {
+      background: #bbdefb;
+      color: #0e4f1f;
+    }
+    #about-modal-bg {
+      display: none;
+      position: fixed;
+      z-index: 2000;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,32,32,0.23);
+      align-items: center; justify-content: center;
+    }
+    #about-popup {
+      background: #e3f2fd;
+      border-radius: 16px;
+      max-width: 370px;
+      border: 2px solid #90caf9;
+      box-shadow: 0 4px 22px #2196f355;
+      padding: 1em 1.2em 1em 1.2em;
+      margin: 1.5em 0.5em 1.5em 0.5em;
+      text-align: center;
+      position: relative;
+      font-size: 0.98em;
+      color: #185a9d;
+      line-height: 1.6;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    #about-popup h2 {
+      font-size: 1.13em;
+      font-weight: 800;
+      color: #185a9d;
+      letter-spacing: 0.5px;
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    #about-popup ul {
+      text-align: left;
+      margin: 0.6em 0 0.6em 0;
+      padding-left: 1.3em;
+      font-size: 0.97em;
+      color: #185a9d;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    #about-popup li {
+      margin-bottom: 0.4em;
+      font-size: 0.97em;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    #about-popup .about-contact {
+      color: #1976d2;
+      margin-top: 0.7em;
+      font-size: 0.97em;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    #about-popup .about-contact a {
+      color: #1976d2;
+      text-decoration: underline;
+      font-weight: 500;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    #about-close {
+      position: absolute;
+      right: 13px;
+      top: 10px;
+      background: transparent;
+      border: none;
+      color: #185a9d;
+      font-size: 1.45em;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 0;
+      z-index: 10;
+      line-height: 1;
+      font-family: 'Inter', Arial, sans-serif;
+    }
+    #about-close:hover { color: #cb2431;}
+    /* ROTATE BUTTON FONT FIX */
+    #rotateBtn {
+      font-family: 'Inter', Arial, sans-serif !important;
+      letter-spacing: normal;
+    }
+    @media (max-width: 1020px) {
+      main {max-width: 99vw; padding: 1.2em 0.4em 1em 0.4em;}
+    }
+    @media (max-width: 900px) {
+      .preview-row {gap: 1em;}
+      .card {min-width: 160px; max-width: 99vw;}
+      main {padding: 1.2em 0.2em 0.8em 0.2em;}
+    }
+    @media (max-width: 700px) {
+      .preview-row { flex-direction: column; gap: 1em;}
+      main { padding: 0.6em 0.2em 0.6em 0.2em;}
+      .card { min-width: 0; width: 99vw; max-width: 99vw; }
+    }
+    @media (max-width: 480px) {
+      main { padding: 0.2em 0.1em 0.2em 0.1em;}
+      .card { padding: 0.9em 0.2em 0.6em 0.2em; }
+      .preview-img { max-width: 95vw; max-height: 32vw; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <span class="main-title">Smart Image Compressor and Converter</span>
+  </header>
+  <main>
+    <div class="upload-zone" id="uploadZone">
+      <div><b>Drag &amp; Drop</b> or use <b>buttons below</b> to upload/capture image</div>
+      <div class="supported-types">
+        Supported: JPEG, PNG, WebP, <span style="color:#2e7d32;">AVIF, HEIC, HEIF, BMP</span>
+      </div>
+      <div class="upload-btn-group">
+        <button class="upload-btn" id="galleryBtn" type="button">Upload from Gallery</button>
+        <button class="upload-btn" id="cameraBtn" type="button">Capture from Camera</button>
+      </div>
+      <input type="file" id="galleryInput" accept="image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif,image/bmp,image/x-ms-bmp,image/*" style="display:none">
+      <input type="file" id="cameraInput" accept="image/jpeg,image/png,image/webp,image/avif,image/heic,image/heif,image/bmp,image/x-ms-bmp,image/*" style="display:none">
+    </div>
+    <div class="preview-row">
+      <div class="card" id="originalCard">
+        <div style="font-weight:600; margin-bottom:5px;">Original</div>
+        <img id="originalPreview" class="preview-img" src="" alt="Original Image Preview" style="display:none;" crossorigin="anonymous">
+        <div style="margin-top:10px;">
+          <button id="openCropBtn" class="btn" style="display:none;">Crop Image</button>
+          <button id="rotateBtn" class="btn" style="display:none;">Rotate 90°</button>
+        </div>
+        <div class="info-row" id="originalInfo"></div>
+      </div>
+      <div class="card" id="compressedCard">
+        <div style="font-weight:600; margin-bottom:5px;">Compressed</div>
+        <img id="compressedPreview" class="preview-img" src="" alt="Compressed Image Preview" style="display:none;" crossorigin="anonymous">
+        <div class="info-row" id="compressedInfo"></div>
+      </div>
+    </div>
+    <div style="margin:1.5em 0 1em 0;">
+      <div class="range-row" id="qualityRow">
+        <label for="qualityRange">Quality:</label>
+        <input type="range" id="qualityRange" min="10" max="100" value="80">
+        <span id="qualityValue">80</span>%
+      </div>
+      <div class="resize-unit-group">
+        <span class="resize-unit-label">Resize Units:</span>
+        <label><input type="radio" name="resizeUnit" value="cm" checked> cm</label>
+        <label><input type="radio" name="resizeUnit" value="inch"> inch</label>
+        <label><input type="radio" name="resizeUnit" value="px"> px</label>
+      </div>
+      <div class="aspect-lock-row">
+        <label class="aspect-lock-label">
+          <input type="checkbox" id="aspectLock" class="aspect-lock-checkbox" checked>
+          Unlock Aspect Ratio
+        </label>
+      </div>
+      <div class="range-row">
+        <label for="resizeWidth">Width (<span id="unitLabelW">cm</span>):</label>
+        <input type="number" id="resizeWidth" min="0.0001" step="any" placeholder="Original width" style="width:90px;">
+      </div>
+      <div class="range-row">
+        <label for="resizeHeight">Height (<span id="unitLabelH">cm</span>):</label>
+        <input type="number" id="resizeHeight" min="0.0001" step="any" placeholder="Original height" style="width:90px;">
+        <button id="resetResize" class="reset-btn" type="button" title="Reset to original">Reset</button>
+      </div>
+      <div style="margin:1em 0;">
+        <label>
+          <input type="checkbox" id="enableSaveAs" checked>
+          Save image as
+        </label>
+        <input type="text" id="saveFilename" style="width:160px;" placeholder="compressed_image">
+        <select id="saveFormat" class="select-format">
+          <option value="auto">Same as original</option>
+          <option value="image/jpeg">JPEG (.jpg)</option>
+          <option value="image/png">PNG (.png)</option>
+          <option value="image/webp">WebP (.webp)</option>
+          <option value="image/avif">AVIF (.avif)</option>
+          <option value="image/heic">HEIC (.heic)</option>
+          <option value="image/heif">HEIF (.heif)</option>
+          <option value="image/bmp">BMP (.bmp)</option>
+        </select>
+      </div>
+      <button id="compressBtn" class="btn" disabled>Compress Image</button>
+      <button id="downloadBtn" class="btn" disabled>Download Compressed</button>
+      <span id="msg" class="error-msg"></span>
+    </div>
+    <div class="zoom-modal" id="zoomModal">
+      <img id="zoomImg" src="" alt="Zoomed image">
+    </div>
+    <div class="zoom-modal" id="cropModal">
+      <div style="background:#fff; padding:18px 14px; border-radius:10px; max-width:99vw; max-height:96vh;">
+        <img id="cropImg" src="" style="max-width:80vw; max-height:60vh;" crossorigin="anonymous">
+        <div style="text-align:center; margin-top:12px;">
+          <button id="cropConfirmBtn" class="btn">Crop &amp; Use</button>
+          <button id="cropCancelBtn" class="reset-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+    <!-- About Modal Popup -->
+    <div id="about-modal-bg">
+      <div id="about-popup">
+        <button id="about-close" aria-label="Close about">&times;</button>
+        <h2>About Smart Image Compressor and Converter</h2>
+        <p style="font-family:'Inter', Arial, sans-serif;">
+          <b>Smart Image Compressor and Converter</b> is a completely free, privacy-focused image tool for all devices. Compress and convert images instantly, right in your browser, with no uploads and no watermarks.<br>
+          <br>
+          <b>Special Features:</b>
+        </p>
+        <ul>
+          <li><b>🔒 Security &amp; Privacy:</b> All processing happens only in your browser. Your images never leave your device.</li>
+          <li><b>💡 Simple to Use:</b> Just drag &amp; drop or capture with camera. One click for compress or convert.</li>
+          <li><b>⚡ Super Fast:</b> No uploads, no waiting! Instantly preview and download results.</li>
+          <li><b>📱 Mobile &amp; Desktop Friendly:</b> Works everywhere – Android, iPhone, tablets, laptops, desktops.</li>
+          <li><b>🖼️ Formats Supported:</b> JPEG, PNG, WebP, AVIF, HEIC, HEIF, BMP.</li>
+          <li><b>🎨 Features:</b> Crop, rotate, resize, lock/unlock aspect ratio, choose output format and filename.</li>
+          <li><b>💸 100% Free:</b> Unlimited use. No sign up. No ads. No hidden charges.</li>
+        </ul>
+        <div class="about-contact">
+          Contact: <a href="mailto:skycommunics@gmail.com">skycommunics@gmail.com</a>
+        </div>
+      </div>
+    </div>
+  </main>
+  <div class="footer">
+    &copy; 2025 Smart Image Compressor | Fast, Free & Secure
+    <button class="about-btn-footer" id="aboutBtnFooter" type="button" title="About this app">About</button>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
